@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="A private collection of beautiful voice memories."
+    >
+
+    <title>Her Voice — Memory Vault</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================================
+         PASSWORD OVERLAY  (ADVANCED)
+    ========================================== -->
+    <div class="lock-screen" id="passwordOverlay">
+        <div class="lock-bg" aria-hidden="true">
+            <div class="lock-aurora a1"></div>
+            <div class="lock-aurora a2"></div>
+            <div class="lock-aurora a3"></div>
+            <div class="lock-glow"></div>
+            <div class="lock-grid"></div>
+            <span class="lock-star st1"></span>
+            <span class="lock-star st2"></span>
+            <span class="lock-star st3"></span>
+            <span class="lock-star st4"></span>
+            <span class="lock-star st5"></span>
+            <span class="lock-star st6"></span>
+        </div>
+
+        <div class="lock-card" id="lockCard">
+            <div class="lock-emblem" id="lockEmblem">
+                <svg class="lock-progress" viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="track" cx="60" cy="60" r="54"></circle>
+                    <circle class="bar" id="progressBar" cx="60" cy="60" r="54"></circle>
+                </svg>
+                <svg class="lock-icon" id="lockIcon" viewBox="0 0 64 64" aria-hidden="true">
+                    <g class="shackle">
+                        <path d="M20 30 v-6 a12 12 0 0 1 24 0 v6"></path>
+                    </g>
+                    <rect class="lock-body" x="16" y="30" width="32" height="26" rx="6"></rect>
+                    <circle class="keyhole" cx="32" cy="42" r="3.6"></circle>
+                    <rect class="keyhole-stem" x="30.7" y="44" width="2.6" height="6.5" rx="1.2"></rect>
+                </svg>
+                <span class="emblem-glow"></span>
+            </div>
+
+            <div class="lock-inner">
+                <span class="lock-eyebrow">✦ PRIVATE VAULT</span>
+                <h2 class="lock-title">Locked.</h2>
+                <p class="lock-sub">Whisper the password to open your memories.</p>
+
+                <div class="lock-input-wrap" id="lockInputWrap">
+                    <input id="passwordInput" type="password" placeholder="••••••••" autocomplete="off" spellcheck="false" autocapitalize="off">
+                    <button class="lock-eye" id="togglePassword" type="button" aria-label="Show password">
+                        <svg class="eye-on" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <svg class="eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M1 12s4-7 11-7c2 0 3.8.6 5.3 1.4M22 12s-4 7-11 7c-2 0-3.8-.6-5.3-1.4"></path>
+                            <line x1="3" y1="3" x2="21" y2="21"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="lock-meta">
+                    <span class="caps-warning" id="capsWarning">⇪ CAPS LOCK</span>
+                    <span class="lock-status" id="lockStatus"></span>
+                </div>
+
+                <button type="button" class="lock-submit" id="passwordSubmit">
+                    <span class="lock-submit-label">UNLOCK</span>
+                    <span class="lock-submit-icon">→</span>
+                </button>
+
+                <p id="passwordError" class="lock-error">Incorrect password. Try again.</p>
+            </div>
+
+            <div class="lock-footer">
+                <span>MEMORY VAULT</span>
+                <span class="lock-dots" id="lockDots">
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         AMBIENT BACKGROUND
+    ========================================== -->
+
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="ambient ambient-3"></div>
+
+    <canvas id="particles"></canvas>
+
+
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+            <span class="brand-dot"></span>
+            HER <span class="brand-title">दोहे</span>
+        </div>
+
+        <div class="nav-meta">
+
+            <span id="totalCounter">
+                55 MEMORIES
+            </span>
+
+            <button
+                class="nav-button"
+                id="randomBtn"
+                type="button"
+            >
+                <span>✦</span>
+                RANDOM
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                <span></span>
+                A PRIVATE COLLECTION OF LITTLE MOMENTS
+            </div>
+
+            <h1 class="hero-title">
+                <b><i>Girlfriend ke</i></b><br>
+            <span><b><i>दोहे.</i></b></span>
+            </h1>
+
+            <p>
+                Some moments disappear with time.
+                Some can simply be pressed play on again.
+            </p>
+
+            <button
+                class="explore-button"
+                id="exploreBtn"
+                type="button"
+            >
+                Explore the collection
+                <span>↓</span>
+            </button>
+
+        </div>
+
+
+        <!-- Hero visualizer -->
+
+        <div class="hero-visualizer">
+
+            <div
+                class="visualizer-bars"
+                id="visualizerBars"
+            ></div>
+
+            <div class="visualizer-text">
+
+                <span>
+                    VOICE MEMORY VAULT
+                </span>
+
+                <strong id="heroMemoryCount">
+                    55
+                </strong>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main id="collection">
+
+        <!-- Section heading -->
+
+        <section class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    01 / COLLECTION
+                </span>
+
+                <h2>
+                    Little
+                    <i>moments.</i>
+                </h2>
+
+            </div>
+
+            <p>
+                Every recording is a tiny piece
+                of a moment worth remembering.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             TOOLBAR
+        ====================================== -->
+
+        <section class="toolbar">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search memories..."
+                    autocomplete="off"
+                >
+
+                <kbd>Ctrl K</kbd>
+
+            </div>
+
+
+            <div class="filters">
+
+                <button
+                    class="filter active"
+                    data-filter="all"
+                    type="button"
+                >
+                    ALL
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="favorites"
+                    type="button"
+                >
+                    ♡ FAVORITES
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="short"
+                    type="button"
+                >
+                    SHORT
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="long"
+                    type="button"
+                >
+                    LONG
+                </button>
+
+            </div>
+
+
+            <button
+                class="sort-button"
+                id="sortBtn"
+                type="button"
+            >
+                OLDEST
+                <span>↕</span>
+            </button>
+
+        </section>
+
+
+        <!-- =====================================
+             MEMORY GRID
+        ====================================== -->
+
+        <section
+            class="memory-grid"
+            id="memoryGrid"
+        ></section>
+
+
+        <!-- Empty -->
+
+        <div
+            class="empty-state"
+            id="emptyState"
+        >
+
+            <div>⌕</div>
+
+            <h3>
+                No memory found
+            </h3>
+
+            <p>
+                Try another search or filter.
+            </p>
+
+        </div>
+
+
+        <!-- Load more -->
+
+        <button
+            class="load-more"
+            id="loadMore"
+            type="button"
+        >
+            LOAD MORE MEMORIES
+            <span>↓</span>
+        </button>
+
+    </main>
+
+
+
+    <!-- =========================================
+         RANDOM MEMORY MODAL
+    ========================================== -->
+
+    <div
+        class="random-overlay"
+        id="randomOverlay"
+    >
+
+        <div class="random-card">
+
+            <button
+                class="close-random"
+                id="closeRandom"
+                type="button"
+            >
+                ×
+            </button>
+
+            <span>
+                ✦ RANDOM MEMORY
+            </span>
+
+            <div
+                class="random-number"
+                id="randomNumber"
+            >
+                01
+            </div>
+
+            <h2 id="randomTitle">
+                A little moment
+            </h2>
+
+            <p id="randomDescription">
+                Press play and let the memory choose you.
+            </p>
+
+            <button
+                class="random-play"
+                id="randomPlay"
+                type="button"
+            >
+                ▶ PLAY MEMORY
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         FLOATING PLAYER
+    ========================================== -->
+
+    <div
+        class="player"
+        id="player"
+    >
+
+        <div class="player-info">
+
+            <div class="player-art">
+
+                <div class="player-wave">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+            <div class="player-text">
+
+                <strong id="playerTitle">
+                    Choose a memory
+                </strong>
+
+                <small id="playerMeta">
+                    Nothing playing
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="player-controls">
+
+            <button
+                id="prevBtn"
+                type="button"
+                aria-label="Previous"
+            >
+                ⏮
+            </button>
+
+            <button
+                class="player-play"
+                id="playerPlay"
+                type="button"
+                aria-label="Play"
+            >
+                ▶
+            </button>
+
+            <button
+                id="nextBtn"
+                type="button"
+                aria-label="Next"
+            >
+                ⏭
+            </button>
+
+        </div>
+
+
+        <div class="player-progress">
+
+            <span id="playerCurrent">
+                00:00
+            </span>
+
+            <div
+                class="progress-track"
+                id="progressTrack"
+            >
+                <div
+                    class="progress-fill"
+                    id="progressFill"
+                ></div>
+            </div>
+
+            <span id="playerDuration">
+                00:00
+            </span>
+
+        </div>
+
+
+        <audio
+            id="audio"
+            preload="metadata"
+        ></audio>
+
+    </div>
+
+
+
+    <!-- =========================================
+         TOAST
+    ========================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+        Memory selected
+    </div>
+
+
+    <script src="script.js"></script>
+
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33e849efb3d897e',t:'MTc4ODIwNTM0Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
