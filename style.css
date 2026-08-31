@@ -2928,14 +2928,14 @@ body.locked {
 .floating-contact-betu,
 .floating-contact-babe {
   position: fixed;
-  right: 20px;
+  left: 20px;
   z-index: 900;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 3px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(255, 77, 141, 0.2), rgba(155, 92, 255, 0.2));
+  background: var(--glass);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(16px);
   font-size: 0.82rem;
