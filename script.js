@@ -1503,6 +1503,9 @@ document.addEventListener(
             &&
             document.activeElement !==
                 searchInput
+            &&
+            document.activeElement !==
+                document.getElementById("titlePlay")
         ) {
 
             event.preventDefault();
@@ -2032,3 +2035,281 @@ document.addEventListener(
     true   // capture phase — runs before the app's own shortcuts
 );
 
+
+
+/* =====================================================
+   TITLE VOICE  —  "दोहे" hero play button
+   plays: audio/dhumtedo.mp4
+===================================================== */
+
+(function () {
+
+    const titleAudio =
+        document.getElementById("titleAudio");
+
+    const titlePlay =
+        document.getElementById("titlePlay");
+
+    const titleWrap =
+        document.querySelector(".title-voice");
+
+    const titleLabel =
+        document.getElementById("titleVoiceLabel");
+
+    const titleTime =
+        document.getElementById("titleVoiceTime");
+
+    const titleBar =
+        document.getElementById("titleProgressBar");
+
+
+    if (!titleAudio || !titlePlay) {
+        return;
+    }
+
+
+    const CIRCUMFERENCE = 289;
+
+    const DEFAULT_LABEL = "Play the दोहा";
+
+
+    /* ---------- helpers ---------- */
+
+    function fmt(seconds) {
+
+        if (
+            !seconds ||
+            !isFinite(seconds)
+        ) {
+            return "00:00";
+        }
+
+        const m =
+            Math.floor(seconds / 60);
+
+        const s =
+            Math.floor(seconds % 60);
+
+        return (
+            String(m).padStart(2, "0") +
+            ":" +
+            String(s).padStart(2, "0")
+        );
+
+    }
+
+
+    function setRing(ratio) {
+
+        titleBar.style.strokeDashoffset =
+            String(
+                CIRCUMFERENCE -
+                (CIRCUMFERENCE * (ratio || 0))
+            );
+
+    }
+
+
+    /* ---------- metadata ---------- */
+
+    titleAudio.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            titleTime.textContent =
+                fmt(titleAudio.duration);
+
+        }
+    );
+
+
+    /* ---------- play / pause toggle ---------- */
+
+    titlePlay.addEventListener(
+        "click",
+        () => {
+
+            if (titleAudio.paused) {
+
+                /* stop the floating player first */
+
+                try {
+
+                    if (
+                        typeof audio !== "undefined" &&
+                        audio &&
+                        !audio.paused
+                    ) {
+                        audio.pause();
+                    }
+
+                } catch (e) {}
+
+
+                titleAudio.play()
+                    .catch((err) => {
+
+                        console.warn(
+                            "Could not play audio/dhumtedo.mp4",
+                            err
+                        );
+
+                        titleWrap.classList.add("is-error");
+
+                        titleLabel.textContent =
+                            "Audio not found";
+
+                        if (typeof showToast === "function") {
+
+                            showToast(
+                                "audio/dhumtedo.mp4 not found"
+                            );
+
+                        }
+
+                    });
+
+            } else {
+
+                titleAudio.pause();
+
+            }
+
+        }
+    );
+
+
+    /* ---------- state ---------- */
+
+    titleAudio.addEventListener(
+        "play",
+        () => {
+
+            titleWrap.classList.add("is-playing");
+
+            titleWrap.classList.remove("is-error");
+
+            titleLabel.textContent =
+                "Now playing";
+
+        }
+    );
+
+
+    titleAudio.addEventListener(
+        "pause",
+        () => {
+
+            titleWrap.classList.remove("is-playing");
+
+            titleLabel.textContent =
+                DEFAULT_LABEL;
+
+        }
+    );
+
+
+    titleAudio.addEventListener(
+        "ended",
+        () => {
+
+            titleWrap.classList.remove("is-playing");
+
+            titleLabel.textContent =
+                DEFAULT_LABEL;
+
+            titleAudio.currentTime = 0;
+
+            setRing(0);
+
+            titleTime.textContent =
+                fmt(titleAudio.duration);
+
+        }
+    );
+
+
+    titleAudio.addEventListener(
+        "error",
+        () => {
+
+            titleWrap.classList.add("is-error");
+
+            titleLabel.textContent =
+                "Audio not found";
+
+        }
+    );
+
+
+    /* ---------- progress ---------- */
+
+    titleAudio.addEventListener(
+        "timeupdate",
+        () => {
+
+            if (
+                !titleAudio.duration ||
+                !isFinite(titleAudio.duration)
+            ) {
+                return;
+            }
+
+            setRing(
+                titleAudio.currentTime /
+                titleAudio.duration
+            );
+
+            titleTime.textContent =
+                fmt(
+                    titleAudio.duration -
+                    titleAudio.currentTime
+                );
+
+        }
+    );
+
+
+    /* ---------- never two voices at once ---------- */
+
+    try {
+
+        if (
+            typeof audio !== "undefined" &&
+            audio
+        ) {
+
+            audio.addEventListener(
+                "play",
+                () => {
+
+                    if (!titleAudio.paused) {
+                        titleAudio.pause();
+                    }
+
+                }
+            );
+
+        }
+
+    } catch (e) {}
+
+})();
+
+
+// ─── SCROLL / NAV ─────────────────────────────────────────
+function onScroll() {
+  const nav = document.querySelector(".nav");
+  const topBtn = document.querySelector(".back-to-top");
+  const y = window.scrollY;
+  if (nav) nav.classList.toggle("scrolled", y > 40);
+  if (topBtn) topBtn.classList.toggle("show", y > 500);
+}
+
+window.addEventListener("scroll", onScroll);
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+window.scrollToTop = scrollToTop;

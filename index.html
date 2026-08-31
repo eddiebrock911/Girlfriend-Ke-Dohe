@@ -21,6 +21,11 @@
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@400;500;600&display=swap"
         rel="stylesheet"
     >
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -129,7 +134,7 @@
         <div class="nav-meta">
 
             <span id="totalCounter">
-                55 MEMORIES
+                45 MEMORIES
             </span>
 
             <button
@@ -164,11 +169,62 @@
             <span><b><i>दोहे.</i></b></span>
             </h1>
 
-            <p>
-                Some moments disappear with time.
-                Some can simply be pressed play on again.
-            </p>
 
+            <!-- =====================================
+                 TITLE VOICE (dhumtedo)
+            ====================================== -->
+
+            <div class="title-voice">
+
+                <button
+                    class="title-play"
+                    id="titlePlay"
+                    type="button"
+                    aria-label="Play दोहे voice"
+                >
+                    <span class="tp-ring r1"></span>
+                    <span class="tp-ring r2"></span>
+
+                    <svg class="tp-progress" viewBox="0 0 100 100" aria-hidden="true">
+                        <circle class="tp-track" cx="50" cy="50" r="46"></circle>
+                        <circle class="tp-bar" id="titleProgressBar" cx="50" cy="50" r="46"></circle>
+                    </svg>
+
+                    <span class="tp-icon">
+                        <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8 5.5v13l11-6.5-11-6.5Z"></path>
+                        </svg>
+                        <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="7" y="5.5" width="3.6" height="13" rx="1.3"></rect>
+                            <rect x="13.4" y="5.5" width="3.6" height="13" rx="1.3"></rect>
+                        </svg>
+                    </span>
+                </button>
+
+                <div class="title-voice-text">
+
+                    <strong id="titleVoiceLabel">
+                        Play the दोहा
+                    </strong>
+
+                    <span class="title-voice-wave" id="titleVoiceWave">
+                        <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                    </span>
+
+                    <small id="titleVoiceTime">
+                        00:00
+                    </small>
+
+                </div>
+
+                <audio
+                    id="titleAudio"
+                    src="audio/dhumtedo.mp4"
+                    preload="metadata"
+                ></audio>
+
+            </div>
+            <br>
             <button
                 class="explore-button"
                 id="exploreBtn"
@@ -197,7 +253,7 @@
                 </span>
 
                 <strong id="heroMemoryCount">
-                    55
+                    45
                 </strong>
 
             </div>
@@ -520,6 +576,23 @@
 
 
     <script src="script.js"></script>
+
+    <!-- Floating Instagram -->
+<a href="https://www.instagram.com/__ankit._.op_/" target="_blank" class="floating-contact-betu" rel="noopener noreferrer">
+  <i class="fab fa-instagram"></i>
+  <span>Betu ❤️</span>
+</a>
+
+<a href="https://www.instagram.com/naincy__raman_/" target="_blank" class="floating-contact-babe" rel="noopener noreferrer">
+  <i class="fab fa-instagram"></i>
+  <span>Babe 💕</span>
+</a>
+
+<!-- Back to Top -->
+<button class="back-to-top" onclick="scrollToTop()" type="button" aria-label="Back to Top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
 
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33e849efb3d897e',t:'MTc4ODIwNTM0Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
